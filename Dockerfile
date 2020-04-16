@@ -1,4 +1,4 @@
-ARG NODE_VERSION=latest
+ARG NODE_VERSION=12.10
 ARG PYTHON_VERSION=3.6
 
 #
@@ -8,7 +8,7 @@ ARG PYTHON_VERSION=3.6
 FROM node:${NODE_VERSION} AS build
 
 # Superset version to build
-ARG SUPERSET_VERSION=master
+ARG SUPERSET_VERSION=0.36.0rc3
 ENV SUPERSET_HOME=/var/lib/superset/
 
 # Download source
@@ -98,5 +98,5 @@ VOLUME /etc/superset \
 # Finalize application
 EXPOSE 8088
 HEALTHCHECK CMD ["curl", "-f", "http://localhost:8088/health"]
-CMD ["gunicorn", "superset:app"]
+CMD ["gunicorn", "superset.app:create_app()"]
 USER superset
